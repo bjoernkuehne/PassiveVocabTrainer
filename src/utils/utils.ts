@@ -1,3 +1,4 @@
+import { ILocalStorageState } from "../interfaces/LocalStorageState";
 import IVocab from "../interfaces/Vocab";
 import IVocabSet from "../interfaces/VocabSet"
 
@@ -36,3 +37,20 @@ export const calcTimeOut = (base: number, vocab: IVocab): number =>
 export const getEmptyVocabSet = (id: number): IVocabSet => (
     { id, name: "", vocabData: [] }
 )
+
+export const getEmptyLocalStorageState = (): ILocalStorageState => (
+    {
+        version: 0.1,
+        data: { vocabSets: [] }
+    }
+)
+
+export const saveInLocalStorage = (localStorageState: ILocalStorageState): void =>
+    localStorage.setItem("passiveVocabTrainer", JSON.stringify(localStorageState))
+
+export const loadFromLocalStorage = (): ILocalStorageState => {
+    const maybeString: string | null = localStorage.getItem("passiveVocabTrainer")
+
+    // Add type and data check for parsed data
+    return maybeString ? JSON.parse(maybeString) : getEmptyLocalStorageState()
+}

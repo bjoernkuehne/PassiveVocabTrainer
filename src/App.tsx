@@ -6,13 +6,19 @@ import VocabSetList from "./components/VocabSetList";
 import IVocabSet from "./interfaces/VocabSet";
 import { TCurrentView } from "./types/CurrentView";
 import EditVocabSetView from "./components/EditVocabSetView";
-import { getEmptyVocabSet } from "./utils/utils";
+import { getEmptyVocabSet, loadFromLocalStorage, saveInLocalStorage } from "./utils/utils";
+import { ILocalStorageState } from "./interfaces/LocalStorageState";
 
 export default function App() {
-  const [vocabSets, setVocabSets] = useState(createMockVocabSets(5, 10))
+  const [localStorageState, setLocalStorageState] = useState<ILocalStorageState>(loadFromLocalStorage())
+  // const [vocabSets, setVocabSets] = useState(createMockVocabSets(5, 10))
   const [maybeCurrentlyLearning, setMaybeCurrentlyLearning] = useState<IVocabSet | undefined>(undefined)
   const [maybeCurrentlyEditing, setMaybeCurrentlyEditing] = useState<IVocabSet | undefined>(undefined)
   const [currentView, setCurrentView] = useState<TCurrentView>("dashboard")
+
+  useEffect(() => {
+    saveInLocalStorage(localStorageState)
+  }, [localStorageState])
 
   useEffect(() => {
     if (maybeCurrentlyEditing) {
@@ -28,7 +34,7 @@ export default function App() {
     <div className="App">
       <h1>Passive Vocab Trainer</h1>
       {currentView === "dashboard" && <>
-        <VocabSetList vocabSets={vocabSets} setMaybeCurrentlyLearning={setMaybeCurrentlyLearning} />
+        <VocabSetList vocabSets={localStorageState.data.vocabSets} setMaybeCurrentlyLearning={setMaybeCurrentlyLearning} />
         <button onClick={() => setMaybeCurrentlyEditing(getEmptyVocabSet(1))}>Add new Set</button>
       </>}
       {currentView === "learning" && <>
