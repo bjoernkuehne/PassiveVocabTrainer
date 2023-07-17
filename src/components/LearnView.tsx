@@ -1,6 +1,7 @@
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import IVocabSet from "../interfaces/VocabSet"
 import { TLearnViewStatus } from "../types/LearnViewStatus"
+import { getVocabIDsFromSet } from "../utils/utils"
 
 interface IProps {
     vocabSet: IVocabSet | undefined
@@ -8,6 +9,8 @@ interface IProps {
 }
 
 const LearnView = (props: IProps) => {
+    const [vocabDataIDs, setVocabDataIDs] = useState<number[]>([])
+
     const [learnViewStatus, setLearnViewStatus] = useState<TLearnViewStatus>("loaded")
 
     const getCloseViewOnClick = () =>
@@ -17,6 +20,10 @@ const LearnView = (props: IProps) => {
     const getSetLearnedViewStatusOnClick = (learnViewStatus: TLearnViewStatus) =>
         () => setLearnViewStatus(learnViewStatus)
 
+    useEffect(() => {
+        if (props.vocabSet)
+            setVocabDataIDs(getVocabIDsFromSet(props.vocabSet))
+    }, [props.vocabSet])
 
     return (
         <div>
