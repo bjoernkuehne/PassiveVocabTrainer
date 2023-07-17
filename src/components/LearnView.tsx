@@ -3,10 +3,12 @@ import IVocabSet from "../interfaces/VocabSet"
 import { TLearnViewStatus } from "../types/LearnViewStatus"
 import { getVocabIDsFromSet, randomizeNumberArray } from "../utils/utils"
 import IVocab from "../interfaces/Vocab"
+import VocabView from "./VocabView"
 
 interface IProps {
     vocabSet: IVocabSet | undefined
     setMaybeCurrentlyLearning: Dispatch<SetStateAction<IVocabSet | undefined>>
+    timeOutBase: number
 }
 
 const LearnView = (props: IProps) => {
@@ -64,7 +66,12 @@ const LearnView = (props: IProps) => {
                 >
                     Start learning
                 </button>}
-            {currentVocab && <div>{currentVocab.targetLanguage}</div>}
+            {currentVocab
+                && <VocabView
+                    vocab={currentVocab}
+                    timeOutBase={props.timeOutBase * 10}
+                />
+            }
             <button onClick={getCloseViewOnClick()}>
                 Close
             </button>
