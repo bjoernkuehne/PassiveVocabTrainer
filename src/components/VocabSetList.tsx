@@ -7,8 +7,11 @@ interface IProps {
 }
 
 const VocabSetList = (props: IProps): JSX.Element => {
+    const getOnClickTr = (vocabSet: IVocabSet) =>
+        () => props.setMaybeCurrentlyLearning(vocabSet)
+
     const SingleVocabSet = (vocabSet: IVocabSet): JSX.Element => (
-        <tr onClick={() => props.setMaybeCurrentlyLearning(vocabSet)}>
+        <tr className="clickable" onClick={getOnClickTr(vocabSet)}>
             {vocabSet.name}
         </tr>
     )
