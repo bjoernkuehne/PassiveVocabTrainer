@@ -43,24 +43,29 @@ const LearnView = (props: IProps) => {
         }
     }
 
+    const refreshVocabDataIDs = (vocabSet: IVocabSet) => {
+        const vocabIDs = getVocabIDsFromSet(vocabSet)
+        const randomizedIDs = randomizeNumberArray(vocabIDs)
+        setVocabDataIDs(randomizedIDs)
+    }
 
     useEffect(() => {
         if (props.vocabSet) {
-            const vocabIDs = getVocabIDsFromSet(props.vocabSet)
-            const randomizedIDs = randomizeNumberArray(vocabIDs)
-            setVocabDataIDs(randomizedIDs)
+            refreshVocabDataIDs(props.vocabSet)
         }
     }, [props.vocabSet])
 
     useEffect(() => {
-        if (learnViewStatus === "playing") {
+        if (learnViewStatus === "playing" && props.vocabSet) {
             if (currentVocab && vocabDataIDs.length > 0) {
                 clearTimeout(currentTimeOut)
                 const timeOut = setTimeout(nextVocab, calculatedTimeOut)
                 setCurrentTimeout(timeOut)
+            } else {
+                refreshVocabDataIDs(props.vocabSet)
             }
         }
-    }, [currentVocab, learnViewStatus])
+    }, [currentVocab, learnViewStatus, vocabDataIDs])
 
     return (
         <div>
