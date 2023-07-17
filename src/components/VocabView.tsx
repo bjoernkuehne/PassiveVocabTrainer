@@ -3,7 +3,7 @@ import IVocab from "../interfaces/Vocab"
 
 interface IProps {
     vocab: IVocab
-    timeOutBase: number
+    calculatedTimeOut: number
 }
 
 type TViewState =
@@ -20,7 +20,7 @@ const VocabView = (props: IProps): JSX.Element => {
             setTimeout(() => {
                 setViewState("translation")
                 clearTimeout(timeOutTemp)
-            }, props.timeOutBase * 0.7)
+            }, props.calculatedTimeOut * 0.55)
     }, [props.vocab])
 
     return (

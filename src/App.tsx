@@ -16,7 +16,7 @@ export default function App() {
         ? <LearnView
           vocabSet={maybeCurrentlyLearning}
           setMaybeCurrentlyLearning={setMaybeCurrentlyLearning}
-          timeOutBase={100}
+          timeOutBase={15}
         />
         : <VocabSetList vocabSets={vocabSets} setMaybeCurrentlyLearning={setMaybeCurrentlyLearning} />
       }

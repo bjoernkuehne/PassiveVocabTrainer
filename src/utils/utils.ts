@@ -1,3 +1,4 @@
+import IVocab from "../interfaces/Vocab";
 import IVocabSet from "../interfaces/VocabSet"
 
 export const createRange = (start: number, end: number, arr: number[] = []): number[] =>
@@ -25,3 +26,9 @@ export const randomizeNumberArray = (input: number[], result: number[] = []): nu
 
 export const buildComponentKey = (int: number, componentName: string): string =>
     `${int}_${componentName}`
+
+const countCharsInVocab = (vocab: IVocab): number =>
+    (vocab.targetLanguage + vocab.translation).trim().length
+
+export const calcTimeOut = (base: number, vocab: IVocab): number =>
+    base * 10 * countCharsInVocab(vocab)

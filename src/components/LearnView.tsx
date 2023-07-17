@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import IVocabSet from "../interfaces/VocabSet"
 import { TLearnViewStatus } from "../types/LearnViewStatus"
-import { getVocabIDsFromSet, randomizeNumberArray } from "../utils/utils"
+import { calcTimeOut, getVocabIDsFromSet, randomizeNumberArray } from "../utils/utils"
 import IVocab from "../interfaces/Vocab"
 import VocabView from "./VocabView"
 
@@ -13,8 +13,12 @@ interface IProps {
 
 const LearnView = (props: IProps) => {
     const [vocabDataIDs, setVocabDataIDs] = useState<number[]>([])
-    const [learnViewStatus, setLearnViewStatus] = useState<TLearnViewStatus>("loaded")
-    const [currentVocab, setCurrentVocab] = useState<IVocab | undefined>(undefined)
+    const [learnViewStatus, setLearnViewStatus] =
+        useState<TLearnViewStatus>("loaded")
+    const [currentVocab, setCurrentVocab] =
+        useState<IVocab | undefined>(undefined)
+    const [calculatedTimeOut, setCalculatedTimeOut] =
+        useState<number>(0)
     const [currentTimeOut, setCurrentTimeout] = useState<NodeJS.Timeout | undefined>(undefined)
 
     const getCloseViewOnClick = () =>
@@ -35,6 +39,7 @@ const LearnView = (props: IProps) => {
         if (maybeVocab) {
             setVocabDataIDs(vocabDataIDs.slice(1))
             setCurrentVocab(maybeVocab)
+            setCalculatedTimeOut(calcTimeOut(props.timeOutBase, maybeVocab))
         }
     }
 
@@ -51,7 +56,7 @@ const LearnView = (props: IProps) => {
         if (learnViewStatus === "playing") {
             if (currentVocab && vocabDataIDs.length > 0) {
                 clearTimeout(currentTimeOut)
-                const timeOut = setTimeout(nextVocab, 1000)
+                const timeOut = setTimeout(nextVocab, calculatedTimeOut)
                 setCurrentTimeout(timeOut)
             }
         }
@@ -69,7 +74,7 @@ const LearnView = (props: IProps) => {
             {currentVocab
                 && <VocabView
                     vocab={currentVocab}
-                    timeOutBase={props.timeOutBase * 10}
+                    calculatedTimeOut={calculatedTimeOut}
                 />
             }
             <button onClick={getCloseViewOnClick()}>
