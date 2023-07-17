@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import IVocabSet from "../interfaces/VocabSet"
 import { TLearnViewStatus } from "../types/LearnViewStatus"
 import { getVocabIDsFromSet, randomizeNumberArray } from "../utils/utils"
+import IVocab from "../interfaces/Vocab"
 
 interface IProps {
     vocabSet: IVocabSet | undefined
@@ -11,13 +12,30 @@ interface IProps {
 const LearnView = (props: IProps) => {
     const [vocabDataIDs, setVocabDataIDs] = useState<number[]>([])
     const [learnViewStatus, setLearnViewStatus] = useState<TLearnViewStatus>("loaded")
+    const [currentVocab, setCurrentVocab] = useState<IVocab | undefined>(undefined)
+    const [currentTimeOut, setCurrentTimeout] = useState<NodeJS.Timeout | undefined>(undefined)
 
     const getCloseViewOnClick = () =>
         () => props.setMaybeCurrentlyLearning(undefined)
 
 
     const getSetLearnedViewStatusOnClick = (learnViewStatus: TLearnViewStatus) =>
-        () => setLearnViewStatus(learnViewStatus)
+        () => {
+            setLearnViewStatus(learnViewStatus)
+            nextVocab()
+        }
+
+    const nextVocab = () => {
+        const currentID = vocabDataIDs[0]
+        const maybeVocab = props.vocabSet?.vocabData
+            .find((val) => val.id === currentID)
+
+        if (maybeVocab) {
+            setVocabDataIDs(vocabDataIDs.slice(1))
+            setCurrentVocab(maybeVocab)
+        }
+    }
+
 
     useEffect(() => {
         if (props.vocabSet) {
@@ -26,6 +44,16 @@ const LearnView = (props: IProps) => {
             setVocabDataIDs(randomizedIDs)
         }
     }, [props.vocabSet])
+
+    useEffect(() => {
+        if (learnViewStatus === "playing") {
+            if (currentVocab && vocabDataIDs.length > 0) {
+                clearTimeout(currentTimeOut)
+                const timeOut = setTimeout(nextVocab, 1000)
+                setCurrentTimeout(timeOut)
+            }
+        }
+    }, [currentVocab, learnViewStatus])
 
     return (
         <div>
@@ -36,6 +64,7 @@ const LearnView = (props: IProps) => {
                 >
                     Start learning
                 </button>}
+            {currentVocab && <div>{currentVocab.targetLanguage}</div>}
             <button onClick={getCloseViewOnClick()}>
                 Close
             </button>
