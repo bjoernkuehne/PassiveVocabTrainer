@@ -12,7 +12,10 @@ export default function App() {
   return (
     <div className="App">
       <h1>Passive Vocab Trainer</h1>
-      <VocabSetList vocabSets={vocabSets} />
+      {maybeCurrentlyLearning
+        ? <LearnView vocabSet={maybeCurrentlyLearning}
+         setMaybeCurrentlyLearning={setMaybeCurrentlyLearning}/>        : <VocabSetList vocabSets={vocabSets} setMaybeCurrentlyLearning={setMaybeCurrentlyLearning} />
+      }
     </div>
   );
 }

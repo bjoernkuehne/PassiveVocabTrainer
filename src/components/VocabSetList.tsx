@@ -1,12 +1,16 @@
+import { Dispatch, SetStateAction } from "react"
 import IVocabSet from "../interfaces/VocabSet"
 
 interface IProps {
     vocabSets: IVocabSet[]
+    setMaybeCurrentlyLearning: Dispatch<SetStateAction<IVocabSet | undefined>>
 }
 
 const VocabSetList = (props: IProps): JSX.Element => {
     const SingleVocabSet = (vocabSet: IVocabSet): JSX.Element => (
-        <tr>{vocabSet.name}</tr>
+        <tr onClick={() => props.setMaybeCurrentlyLearning(vocabSet)}>
+            {vocabSet.name}
+        </tr>
     )
 
     return (
