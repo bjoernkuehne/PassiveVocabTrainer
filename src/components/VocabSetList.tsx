@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react"
 import IVocabSet from "../interfaces/VocabSet"
+import { buildComponentKey } from "../utils/utils"
 
 interface IProps {
     vocabSets: IVocabSet[]
@@ -11,14 +12,19 @@ const VocabSetList = (props: IProps): JSX.Element => {
         () => props.setMaybeCurrentlyLearning(vocabSet)
 
     const SingleVocabSet = (vocabSet: IVocabSet): JSX.Element => (
-        <tr className="clickable" onClick={getOnClickTr(vocabSet)}>
-            {vocabSet.name}
+        <tr
+            key={buildComponentKey(vocabSet.id, "SingleVocabSet")}
+            className="clickable" onClick={getOnClickTr(vocabSet)}
+        >
+            <td>{vocabSet.name}</td>
         </tr>
     )
 
     return (
         <table>
-            {props.vocabSets.map(SingleVocabSet)}
+            <tbody>
+                {props.vocabSets.map(SingleVocabSet)}
+            </tbody>
         </table>
     )
 }
