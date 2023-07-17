@@ -4,6 +4,7 @@ import Input from "./Input";
 
 interface IProps {
     vocabSet: IVocabSet
+    saveSet: (vocabSet: IVocabSet) => void
 }
 
 const EditVocabSetView = (props: IProps) => {
@@ -11,6 +12,10 @@ const EditVocabSetView = (props: IProps) => {
 
     const setName = (event: ChangeEvent<HTMLInputElement>) => {
         setTempVocabSet({ ...tempVocabSet, name: event.target.value })
+    }
+
+    const handleOnSave = () => {
+        props.saveSet(tempVocabSet)
     }
 
     return (
@@ -21,6 +26,7 @@ const EditVocabSetView = (props: IProps) => {
                 value={tempVocabSet.name}
                 onChange={setName}
             />
+            <button onClick={handleOnSave}>Save</button>
         </>
     )
 }

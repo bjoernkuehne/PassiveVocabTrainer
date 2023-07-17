@@ -6,7 +6,7 @@ import VocabSetList from "./components/VocabSetList";
 import IVocabSet from "./interfaces/VocabSet";
 import { TCurrentView } from "./types/CurrentView";
 import EditVocabSetView from "./components/EditVocabSetView";
-import { getEmptyVocabSet, loadFromLocalStorage, saveInLocalStorage } from "./utils/utils";
+import { doesVocabSetContainID, getEmptyVocabSet, getNewID, loadFromLocalStorage, saveInLocalStorage } from "./utils/utils";
 import { ILocalStorageState } from "./interfaces/LocalStorageState";
 
 export default function App() {
@@ -15,6 +15,33 @@ export default function App() {
   const [maybeCurrentlyLearning, setMaybeCurrentlyLearning] = useState<IVocabSet | undefined>(undefined)
   const [maybeCurrentlyEditing, setMaybeCurrentlyEditing] = useState<IVocabSet | undefined>(undefined)
   const [currentView, setCurrentView] = useState<TCurrentView>("dashboard")
+
+  const onClickHandlerNewSet = () => {
+    const newID = getNewID(localStorageState)
+    const emptyVocabSet = getEmptyVocabSet(newID)
+    setMaybeCurrentlyEditing(emptyVocabSet)
+  }
+
+  const handleSaveSet = (vocabSet: IVocabSet) => {
+    const existingSet: boolean = doesVocabSetContainID(localStorageState, vocabSet.id)
+
+    if (existingSet) {
+      setLocalStorageState({
+        ...localStorageState, data: {
+          ...localStorageState.data,
+          vocabSets: localStorageState.data.vocabSets
+            .map((val) => val.id === vocabSet.id ? vocabSet : val)
+        }
+      })
+    } else {
+      setLocalStorageState({
+        ...localStorageState, data: {
+          ...localStorageState.data,
+          vocabSets: [...localStorageState.data.vocabSets, vocabSet]
+        }
+      })
+    }
+  }
 
   useEffect(() => {
     saveInLocalStorage(localStorageState)
@@ -35,7 +62,7 @@ export default function App() {
       <h1>Passive Vocab Trainer</h1>
       {currentView === "dashboard" && <>
         <VocabSetList vocabSets={localStorageState.data.vocabSets} setMaybeCurrentlyLearning={setMaybeCurrentlyLearning} />
-        <button onClick={() => setMaybeCurrentlyEditing(getEmptyVocabSet(1))}>Add new Set</button>
+        <button onClick={onClickHandlerNewSet}>Add new Set</button>
       </>}
       {currentView === "learning" && <>
         <LearnView
@@ -45,7 +72,7 @@ export default function App() {
         />
       </>}
       {currentView === "editing" && maybeCurrentlyEditing && <>
-        <EditVocabSetView vocabSet={maybeCurrentlyEditing} />
+        <EditVocabSetView vocabSet={maybeCurrentlyEditing} saveSet={handleSaveSet} />
       </>}
     </div>
   );

@@ -54,3 +54,11 @@ export const loadFromLocalStorage = (): ILocalStorageState => {
     // Add type and data check for parsed data
     return maybeString ? JSON.parse(maybeString) : getEmptyLocalStorageState()
 }
+
+export const getNewID = (localStorageState: ILocalStorageState): number =>
+    localStorageState.data.vocabSets.length > 0
+        ? Math.max(...localStorageState.data.vocabSets.flatMap((val) => val.id)) + 1 || 1
+        : 1
+
+export const doesVocabSetContainID = (localStorageState: ILocalStorageState, id: number): boolean =>
+    localStorageState.data.vocabSets.some((val) => val.id === id)
