@@ -22,6 +22,18 @@ const LearnView = (props: IProps) => {
         useState<number>(0)
     const [currentTimeOut, setCurrentTimeout] = useState<NodeJS.Timeout | undefined>(undefined)
 
+    const nextVocab = () => {
+        const currentID = vocabDataIDs[0]
+        const maybeVocab = props.vocabSet?.vocabData
+            .find((val) => val.id === currentID)
+
+        if (maybeVocab) {
+            setVocabDataIDs(vocabDataIDs.slice(1))
+            setCurrentVocab(maybeVocab)
+            setCalculatedTimeOut(calcTimeOut(props.timeOutBase, maybeVocab))
+        }
+    }
+
     const getSetLearnedViewStatusOnClick = (learnViewStatus: TLearnViewStatus) =>
         () => {
             setLearnViewStatus(learnViewStatus)
@@ -37,18 +49,6 @@ const LearnView = (props: IProps) => {
                 props.deleteSet(vocabSet)
             }
         }
-
-    const nextVocab = () => {
-        const currentID = vocabDataIDs[0]
-        const maybeVocab = props.vocabSet?.vocabData
-            .find((val) => val.id === currentID)
-
-        if (maybeVocab) {
-            setVocabDataIDs(vocabDataIDs.slice(1))
-            setCurrentVocab(maybeVocab)
-            setCalculatedTimeOut(calcTimeOut(props.timeOutBase, maybeVocab))
-        }
-    }
 
     const refreshVocabDataIDs = (vocabSet: IVocabSet) => {
         const vocabIDs = getVocabIDsFromSet(vocabSet)
