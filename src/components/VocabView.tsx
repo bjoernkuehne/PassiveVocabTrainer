@@ -31,10 +31,14 @@ const VocabView = (props: IProps): JSX.Element => {
 
     return (
         <table className="VocabView">
-            <tr className={`VocabViewTargetLanguage${viewState === "target" ? " fadeIn" : ""}`}>{props.vocab.targetLanguage}</tr>
-            <tr className={`VocabViewTranslation${viewState === "translation" ? " fadeIn" : playFadeOutAnimation ? " fadeOut" : ""}`}>
-                {viewState === "translation" ? props.vocab.translation : ""}
-            </tr>
+            <tbody>
+                <tr className={`VocabViewTargetLanguage${viewState === "target" ? " fadeIn" : ""}`}>
+                    <td>{props.vocab.targetLanguage}</td>
+                </tr>
+                <tr className={`VocabViewTranslation${viewState === "translation" ? " fadeIn" : playFadeOutAnimation ? " fadeOut" : ""}`}>
+                    <td>{viewState === "translation" ? props.vocab.translation : ""}</td>
+                </tr>
+            </tbody>
         </table>
     )
 }
