@@ -4,19 +4,29 @@ import { buildComponentKey } from "../utils/utils"
 
 interface IProps {
     vocabSets: IVocabSet[]
+    setForEditing: (vocabSet: IVocabSet) => void
     setMaybeCurrentlyLearning: Dispatch<SetStateAction<IVocabSet | undefined>>
 }
 
 const VocabSetList = (props: IProps): JSX.Element => {
-    const getOnClickTr = (vocabSet: IVocabSet) =>
+    const getStartLearningHandler = (vocabSet: IVocabSet) =>
         () => props.setMaybeCurrentlyLearning(vocabSet)
+
+    const getEditingHandler = (vocabSet: IVocabSet) =>
+        () => props.setForEditing(vocabSet)
 
     const SingleVocabSet = (vocabSet: IVocabSet): JSX.Element => (
         <tr
             key={buildComponentKey(vocabSet.id, "SingleVocabSet")}
-            className="clickable" onClick={getOnClickTr(vocabSet)}
         >
-            <td>{vocabSet.name}</td>
+            <td
+                className="clickable"
+                onClick={getStartLearningHandler(vocabSet)}
+            >{vocabSet.name}</td>
+            <td
+                className="clickable"
+                onClick={getEditingHandler(vocabSet)}
+            >Edit</td>
         </tr>
     )
 

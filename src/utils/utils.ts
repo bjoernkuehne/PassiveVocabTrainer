@@ -32,7 +32,7 @@ const countCharsInVocab = (vocab: IVocab): number =>
     (vocab.targetLanguage + vocab.translation).trim().length
 
 export const calcTimeOut = (base: number, vocab: IVocab): number =>
-    base * 10 * countCharsInVocab(vocab)
+    base * 10 * countCharsInVocab(vocab) + 5000
 
 
 export const getEmptyVocab = (id: number): IVocab => (

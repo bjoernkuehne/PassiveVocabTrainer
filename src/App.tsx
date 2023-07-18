@@ -41,6 +41,8 @@ export default function App() {
         }
       })
     }
+
+    setMaybeCurrentlyEditing(undefined)
   }
 
   useEffect(() => {
@@ -61,7 +63,11 @@ export default function App() {
     <div className="App">
       <h1>Passive Vocab Trainer</h1>
       {currentView === "dashboard" && <>
-        <VocabSetList vocabSets={localStorageState.data.vocabSets} setMaybeCurrentlyLearning={setMaybeCurrentlyLearning} />
+        <VocabSetList
+          vocabSets={localStorageState.data.vocabSets}
+          setMaybeCurrentlyLearning={setMaybeCurrentlyLearning}
+          setForEditing={setMaybeCurrentlyEditing}
+        />
         <button onClick={onClickHandlerNewSet}>Add new Set</button>
       </>}
       {currentView === "learning" && <>
