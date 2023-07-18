@@ -76,10 +76,12 @@ export default function App() {
   return (
     <div className="App">
       <header className="Header">
-        <h1>Passive Vocab Trainer</h1>
-        {currentView !== "dashboard" &&
-          <button onClick={resetStates}>X</button>
-        }
+        <div className="HeaderContent">
+          <h1 onClick={resetStates}>Passive Vocab Trainer</h1>
+          {currentView !== "dashboard" &&
+            <button className="CloseButton" onClick={resetStates}>X</button>
+          }
+        </div>
       </header>
       <div className="Dashboard">
         <div className="Content">
@@ -87,7 +89,6 @@ export default function App() {
             <VocabSetList
               vocabSets={localStorageState.data.vocabSets}
               setMaybeCurrentlyLearning={setMaybeCurrentlyLearning}
-            // setForEditing={setMaybeCurrentlyEditing}
             />
             <button onClick={onClickHandlerNewSet}>Add new Set</button>
           </>}
