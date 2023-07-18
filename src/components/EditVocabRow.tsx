@@ -22,13 +22,13 @@ const EditVocabRow = (props: IProps): JSX.Element => {
     return (
         <div className="EditVocabRow">
             <Input
-                labelName="target language"
+                labelName="front"
                 componentName={`${props.vocab.id}_targetLanguage`}
                 value={props.vocab.targetLanguage}
                 onChange={handlerTargetLanguage}
             />
             <Input
-                labelName="translation"
+                labelName="back"
                 componentName={`${props.vocab.id}_translation`}
                 value={props.vocab.translation}
                 onChange={handlerTranslation}

@@ -18,8 +18,7 @@ body {
 .Header {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
   width: 100%;
   background-color: var(--secondary-color);
   margin: 0;
@@ -27,7 +26,16 @@ body {
   padding: 0.5rem;
 }
 
-.Header > h1 {
+.HeaderContent {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 40rem;
+}
+
+.Header h1 {
+  cursor: pointer;
   margin: 0;
   color: white;
 }
@@ -43,7 +51,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: start;
-  width: 30rem;
+  width: 40rem;
 }
 
 .VocabView {
@@ -152,6 +160,11 @@ label {
 
 .gap {
   gap: 0.5rem;
+}
+
+.CloseButton {
+  color: rgb(193, 0, 0);
+  border: 2px solid rgb(193, 0, 0);
 }
 
 @keyframes fadeIn {
