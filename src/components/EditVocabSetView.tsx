@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import IVocabSet from "../interfaces/VocabSet";
 import Input from "./Input";
 import EditVocabRow from "./EditVocabRow";
-import { buildComponentKey, getEmptyVocab, getEmptyVocabSet } from "../utils/utils";
+import { buildComponentKey, getEmptyVocab, getNewIdFromVocabSet } from "../utils/utils";
 import IVocab from "../interfaces/Vocab";
 
 interface IProps {
@@ -25,12 +25,23 @@ const EditVocabSetView = (props: IProps) => {
         setLocalVocabSet({ ...localVocabSet, vocabData: localVocabSet.vocabData.map((val) => val.id === vocab.id ? vocab : val) })
     }
 
+    const addRow = () => {
+        // TODO: Maybe change new ID handling to "on save"
+        const newID = getNewIdFromVocabSet(localVocabSet)
+        const newVocab = getEmptyVocab(newID)
+        setLocalVocabSet({ ...localVocabSet, vocabData: [...localVocabSet.vocabData, newVocab] })
+    }
+
+    const handleRemove = (vocab: IVocab) => {
+        setLocalVocabSet({ ...localVocabSet, vocabData: localVocabSet.vocabData.filter((val) => val.id !== vocab.id) })
+    }
+
     useEffect(() => {
         if (localVocabSet.vocabData.length === 0) {
             const newVocabSet: IVocabSet = { ...props.vocabSet, vocabData: [getEmptyVocab(1)] }
             setLocalVocabSet(newVocabSet)
         }
-        }, [props.vocabSet.vocabData])
+    }, [props.vocabSet.vocabData])
 
     return (
         <>
@@ -40,10 +51,13 @@ const EditVocabSetView = (props: IProps) => {
                 value={localVocabSet.name}
                 onChange={setName}
             />
-            {localVocabSet.vocabData.map((val) =>
-                <EditVocabRow key={buildComponentKey(val.id, "EditVocabRow")} vocab={val} handleVocabUpdate={handleVocabUpdate} />
+            {localVocabSet.vocabData.map((val, index) =>
+                <EditVocabRow key={buildComponentKey(val.id, "EditVocabRow")} vocab={val} handleVocabUpdate={handleVocabUpdate} handleRemove={index !== 0 ? handleRemove : undefined} />
             )}
-            <button onClick={handleOnSave}>Save</button>
+            <div className="buttonRow">
+                <button onClick={addRow}>Add row</button>
+                <button onClick={handleOnSave}>Save</button>
+            </div>
         </>
     )
 }

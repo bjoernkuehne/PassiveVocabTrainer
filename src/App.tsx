@@ -6,7 +6,7 @@ import VocabSetList from "./components/VocabSetList";
 import IVocabSet from "./interfaces/VocabSet";
 import { TCurrentView } from "./types/CurrentView";
 import EditVocabSetView from "./components/EditVocabSetView";
-import { doesVocabSetContainID, getEmptyVocabSet, getNewID, loadFromLocalStorage, saveInLocalStorage } from "./utils/utils";
+import { doesVocabSetContainID, getEmptyVocabSet, getNewIdFromLocalStorageState, loadFromLocalStorage, saveInLocalStorage } from "./utils/utils";
 import { ILocalStorageState } from "./interfaces/LocalStorageState";
 
 export default function App() {
@@ -17,7 +17,7 @@ export default function App() {
   const [currentView, setCurrentView] = useState<TCurrentView>("dashboard")
 
   const onClickHandlerNewSet = () => {
-    const newID = getNewID(localStorageState)
+    const newID = getNewIdFromLocalStorageState(localStorageState)
     const emptyVocabSet = getEmptyVocabSet(newID)
     setMaybeCurrentlyEditing(emptyVocabSet)
   }

@@ -60,9 +60,14 @@ export const loadFromLocalStorage = (): ILocalStorageState => {
     return maybeString ? JSON.parse(maybeString) : getEmptyLocalStorageState()
 }
 
-export const getNewID = (localStorageState: ILocalStorageState): number =>
+export const getNewIdFromLocalStorageState = (localStorageState: ILocalStorageState): number =>
     localStorageState.data.vocabSets.length > 0
         ? Math.max(...localStorageState.data.vocabSets.flatMap((val) => val.id)) + 1 || 1
+        : 1
+
+export const getNewIdFromVocabSet = (vocabSet: IVocabSet): number =>
+    vocabSet.vocabData.length > 0
+        ? Math.max(...vocabSet.vocabData.flatMap((val) => val.id)) + 1 || 1
         : 1
 
 export const doesVocabSetContainID = (localStorageState: ILocalStorageState, id: number): boolean =>
