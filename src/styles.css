@@ -1,4 +1,76 @@
+:root {
+  --primary-color: black;
+  --secondary-color: rgb(0, 206, 93);
+  --color-disabled: rgb(218, 218, 218);
+}
+
 .App {
   font-family: sans-serif;
-  text-align: center;
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:hover {
+  color: var(--secondary-color);
+}
+
+.Input {
+  display: flex;
+  flex-direction: column;
+  place-content: left;
+  box-sizing: border-box;
+  padding-bottom: 1rem;
+  width: 100%;
+}
+
+.EditVocabRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 1rem;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.full-width {
+  width: 100%;
+}
+
+tr {
+  border-bottom: 1px solid grey;
+  padding: 0.5rem 0;
+  margin: 0.5rem 0;
+}
+
+button {
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 0.2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: white;
+  height: 2rem;
+}
+
+button:hover {
+  color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  color: var(--color-disabled);
+  border-color: var(--color-disabled);
+}
+
+label {
+  margin-bottom: 0.2rem;
 }
