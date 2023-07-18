@@ -86,20 +86,22 @@ const LearnView = (props: IProps) => {
                     >
                         Start learning
                     </button>
-                    {props.vocabSet &&
-                        <button
-                            onClick={getDeleteSetHandler(props.vocabSet)}
-                        >
-                            Delete Set
-                        </button>
-                    }
-                    {props.vocabSet &&
-                        <button
-                            onClick={getSetForEditing(props.vocabSet)}
-                        >
-                            Edit Set
-                        </button>
-                    }
+                    <div className="flex-row gap">
+                        {props.vocabSet &&
+                            <button
+                                onClick={getDeleteSetHandler(props.vocabSet)}
+                            >
+                                Delete Set
+                            </button>
+                        }
+                        {props.vocabSet &&
+                            <button
+                                onClick={getSetForEditing(props.vocabSet)}
+                            >
+                                Edit Set
+                            </button>
+                        }
+                    </div>
                 </div>
                 <div>
                     {props.vocabSet?.vocabData.map((val) => <p>{val.targetLanguage}</p>)}
