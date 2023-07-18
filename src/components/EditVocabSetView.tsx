@@ -12,6 +12,7 @@ interface IProps {
 
 const EditVocabSetView = (props: IProps) => {
     const [localVocabSet, setLocalVocabSet] = useState<IVocabSet>(props.vocabSet)
+    const [isFormValid, setIsFormValid] = useState<boolean>(false)
 
     const setName = (event: ChangeEvent<HTMLInputElement>) => {
         setLocalVocabSet({ ...localVocabSet, name: event.target.value })
@@ -36,12 +37,19 @@ const EditVocabSetView = (props: IProps) => {
         setLocalVocabSet({ ...localVocabSet, vocabData: localVocabSet.vocabData.filter((val) => val.id !== vocab.id) })
     }
 
+    const validateLocalVocabSet = (vocabSet: IVocabSet): boolean =>
+        !vocabSet.vocabData.some((val) => val.targetLanguage.trim().length < 1 || val.translation.trim().length < 1)
+
     useEffect(() => {
         if (localVocabSet.vocabData.length === 0) {
             const newVocabSet: IVocabSet = { ...props.vocabSet, vocabData: [getEmptyVocab(1)] }
             setLocalVocabSet(newVocabSet)
         }
     }, [props.vocabSet.vocabData])
+
+    useEffect(() => {
+        setIsFormValid(validateLocalVocabSet(localVocabSet))
+    }, [localVocabSet])
 
     return (
         <>
@@ -60,7 +68,7 @@ const EditVocabSetView = (props: IProps) => {
             )}
             <div className="flex-row">
                 <button onClick={addRow}>Add row</button>
-                <button onClick={handleOnSave}>Save</button>
+                <button disabled={!isFormValid} onClick={handleOnSave}>Save</button>
             </div>
         </>
     )
