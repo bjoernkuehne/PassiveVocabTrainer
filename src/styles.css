@@ -1,13 +1,84 @@
 :root {
   --primary-color: black;
-  --secondary-color: rgb(0, 206, 93);
+  --secondary-color: rgb(0, 148, 185);
   --color-disabled: rgb(218, 218, 218);
 }
 
-.App {
-  font-family: sans-serif;
-  max-width: 40rem;
+body {
   margin: 0 auto;
+}
+
+h1 {
+  margin: 0;
+  color: white;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+  min-height: 100vh;
+}
+
+.Header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: var(--secondary-color);
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0.5rem;
+}
+
+.Dashboard {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+  padding: 0.5rem;
+}
+
+.Content {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  width: 30rem;
+}
+
+.VocabView {
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  text-align: center;
+  flex-grow: 1;
+  width: 100%;
+  font-size: 2rem;
+}
+
+.VocabViewTargetLanguage {
+  display: flex;
+  box-sizing: border-box;
+  align-items: end;
+  justify-content: center;
+  padding: 1rem;
+  flex-grow: 0;
+  height: 50%;
+  max-height: 50%;
+  margin: 0;
+  border-bottom: 2px solid var(--secondary-color);
+}
+
+.VocabViewTranslation {
+  display: flex;
+  box-sizing: border-box;
+  align-items: start;
+  justify-content: center;
+  padding: 1rem;
+  flex-grow: 0;
+  margin: 0;
+  height: 50%;
+  max-height: 50%;
 }
 
 .clickable {
@@ -44,25 +115,29 @@
   width: 100%;
 }
 
-tr {
+.SetTr {
   border-bottom: 1px solid grey;
-  padding: 0.5rem 0;
-  margin: 0.5rem 0;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 button {
   cursor: pointer;
-  border: 1px solid black;
+  font-weight: bold;
+  border: 2px solid black;
   border-radius: 0.2rem;
   padding-left: 1rem;
   padding-right: 1rem;
   background-color: white;
   height: 2rem;
+  white-space: nowrap;
+  transition: all 100ms;
 }
 
 button:hover {
   color: var(--secondary-color);
   border-color: var(--secondary-color);
+  transition: all 100ms;
 }
 
 button:disabled {
@@ -73,4 +148,38 @@ button:disabled {
 
 label {
   margin-bottom: 0.2rem;
+}
+
+.gap {
+  gap: 0.5rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+  animation-duration: 1s;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.fadeOut {
+  animation-name: fadeOut;
+  animation-duration: 200ms;
 }
