@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import LearnView from "./components/LearnView";
 import "./styles.css";
-import { createMockVocabSets } from "./data/mock-data";
 import VocabSetList from "./components/VocabSetList";
 import IVocabSet from "./interfaces/VocabSet";
 import { TCurrentView } from "./types/CurrentView";
@@ -41,7 +40,7 @@ export default function App() {
       })
     }
 
-    setMaybeCurrentlyEditing(undefined)
+    resetStates()
   }
 
   const resetStates = () => {
@@ -76,29 +75,35 @@ export default function App() {
 
   return (
     <div className="App">
-      <header className="flex-row full-width">
+      <header className="Header">
         <h1>Passive Vocab Trainer</h1>
-        {currentView !== "dashboard" && <p className="clickable" onClick={resetStates}>X</p>}
+        {currentView !== "dashboard" &&
+          <button onClick={resetStates}>X</button>
+        }
       </header>
-      {currentView === "dashboard" && <>
-        <VocabSetList
-          vocabSets={localStorageState.data.vocabSets}
-          setMaybeCurrentlyLearning={setMaybeCurrentlyLearning}
-        // setForEditing={setMaybeCurrentlyEditing}
-        />
-        <button onClick={onClickHandlerNewSet}>Add new Set</button>
-      </>}
-      {currentView === "learning" && <>
-        <LearnView
-          vocabSet={maybeCurrentlyLearning}
-          setForEditing={setMaybeCurrentlyEditing}
-          deleteSet={deleteSet}
-          timeOutBase={1}
-        />
-      </>}
-      {currentView === "editing" && maybeCurrentlyEditing && <>
-        <EditVocabSetView vocabSet={maybeCurrentlyEditing} saveSet={handleSaveSet} />
-      </>}
+      <div className="Dashboard">
+        <div className="Content">
+          {currentView === "dashboard" && <>
+            <VocabSetList
+              vocabSets={localStorageState.data.vocabSets}
+              setMaybeCurrentlyLearning={setMaybeCurrentlyLearning}
+            // setForEditing={setMaybeCurrentlyEditing}
+            />
+            <button onClick={onClickHandlerNewSet}>Add new Set</button>
+          </>}
+          {currentView === "learning" && <>
+            <LearnView
+              vocabSet={maybeCurrentlyLearning}
+              setForEditing={setMaybeCurrentlyEditing}
+              deleteSet={deleteSet}
+              timeOutBase={1}
+            />
+          </>}
+          {currentView === "editing" && maybeCurrentlyEditing && <>
+            <EditVocabSetView vocabSet={maybeCurrentlyEditing} saveSet={handleSaveSet} />
+          </>}
+        </div>
+      </div>
     </div>
   );
 }

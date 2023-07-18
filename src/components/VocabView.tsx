@@ -24,12 +24,12 @@ const VocabView = (props: IProps): JSX.Element => {
     }, [props.vocab])
 
     return (
-        <div>
-            <p>{props.vocab.targetLanguage}</p>
-            <p>
+        <table className="VocabView">
+            <tr className="VocabViewTargetLanguage">{props.vocab.targetLanguage}</tr>
+            <tr className="VocabViewTranslation">
                 {viewState === "translation" ? props.vocab.translation : "..."}
-            </p>
-        </div>
+            </tr>
+        </table>
     )
 }
 

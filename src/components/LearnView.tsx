@@ -75,7 +75,7 @@ const LearnView = (props: IProps) => {
     }, [currentVocab, learnViewStatus, vocabDataIDs])
 
     return (
-        <div>
+        <>
             {learnViewStatus !== "playing" &&
                 <h1>{props.vocabSet?.name}</h1>
             }
@@ -111,7 +111,7 @@ const LearnView = (props: IProps) => {
                     calculatedTimeOut={calculatedTimeOut}
                 />
             }
-        </div>
+        </>
     )
 }
 
