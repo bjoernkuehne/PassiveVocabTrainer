@@ -1,3 +1,4 @@
+import { getExampleVocabSet } from "../data/mock-data";
 import { ILocalStorageState } from "../interfaces/LocalStorageState";
 import IVocab from "../interfaces/Vocab";
 import IVocabSet from "../interfaces/VocabSet"
@@ -46,7 +47,7 @@ export const getEmptyVocabSet = (id: number): IVocabSet => (
 export const getEmptyLocalStorageState = (): ILocalStorageState => (
     {
         version: 0.1,
-        data: { vocabSets: [] }
+        data: { vocabSets: [getExampleVocabSet(1, "Example Set")] }
     }
 )
 

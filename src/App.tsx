@@ -11,7 +11,6 @@ import { ILocalStorageState } from "./interfaces/LocalStorageState";
 
 export default function App() {
   const [localStorageState, setLocalStorageState] = useState<ILocalStorageState>(loadFromLocalStorage())
-  // const [vocabSets, setVocabSets] = useState(createMockVocabSets(5, 10))
   const [maybeCurrentlyLearning, setMaybeCurrentlyLearning] = useState<IVocabSet | undefined>(undefined)
   const [maybeCurrentlyEditing, setMaybeCurrentlyEditing] = useState<IVocabSet | undefined>(undefined)
   const [currentView, setCurrentView] = useState<TCurrentView>("dashboard")
@@ -45,6 +44,11 @@ export default function App() {
     setMaybeCurrentlyEditing(undefined)
   }
 
+  const resetStates = () => {
+    setMaybeCurrentlyEditing(undefined)
+    setMaybeCurrentlyLearning(undefined)
+  }
+
   useEffect(() => {
     saveInLocalStorage(localStorageState)
   }, [localStorageState])
@@ -61,7 +65,10 @@ export default function App() {
 
   return (
     <div className="App">
-      <h1>Passive Vocab Trainer</h1>
+      <header className="Header">
+        <h1 >Passive Vocab Trainer</h1>
+        {currentView !== "dashboard" && <p className="clickable" onClick={resetStates}>X</p>}
+      </header>
       {currentView === "dashboard" && <>
         <VocabSetList
           vocabSets={localStorageState.data.vocabSets}
