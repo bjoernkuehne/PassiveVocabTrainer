@@ -12,8 +12,10 @@ type TViewState =
 
 const VocabView = (props: IProps): JSX.Element => {
     const [viewState, setViewState] = useState<TViewState>("target")
+    const [playFadeOutAnimation, setPlayFadeOutAnimation] = useState<boolean>(false)
 
     useEffect(() => {
+        setPlayFadeOutAnimation(false)
         setViewState("target")
 
         const timeOutTemp =
@@ -21,12 +23,16 @@ const VocabView = (props: IProps): JSX.Element => {
                 setViewState("translation")
                 clearTimeout(timeOutTemp)
             }, props.calculatedTimeOut * 0.55)
+        const fadeOutTemp =
+            setTimeout(() => {
+                clearTimeout(fadeOutTemp)
+            }, props.calculatedTimeOut - 200)
     }, [props.vocab])
 
     return (
         <table className="VocabView">
-            <tr className={`VocabViewTargetLanguage ${viewState === "target" ? "fadeIn" : ""}`}>{props.vocab.targetLanguage}</tr>
-            <tr className={`VocabViewTranslation ${viewState === "translation" ? "fadeIn" : ""}`}>
+            <tr className={`VocabViewTargetLanguage${viewState === "target" ? " fadeIn" : ""}`}>{props.vocab.targetLanguage}</tr>
+            <tr className={`VocabViewTranslation${viewState === "translation" ? " fadeIn" : playFadeOutAnimation ? " fadeOut" : ""}`}>
                 {viewState === "translation" ? props.vocab.translation : ""}
             </tr>
         </table>

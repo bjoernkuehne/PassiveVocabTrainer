@@ -96,7 +96,7 @@ export default function App() {
               vocabSet={maybeCurrentlyLearning}
               setForEditing={setMaybeCurrentlyEditing}
               deleteSet={deleteSet}
-              timeOutBase={1}
+              timeOutBase={5}
             />
           </>}
           {currentView === "editing" && maybeCurrentlyEditing && <>
