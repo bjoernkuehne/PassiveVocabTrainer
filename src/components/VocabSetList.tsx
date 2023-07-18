@@ -18,6 +18,7 @@ const VocabSetList = (props: IProps): JSX.Element => {
     const SingleVocabSet = (vocabSet: IVocabSet): JSX.Element => (
         <tr
             key={buildComponentKey(vocabSet.id, "SingleVocabSet")}
+            className="flex-row"
         >
             <td
                 className="clickable"
@@ -31,7 +32,7 @@ const VocabSetList = (props: IProps): JSX.Element => {
     )
 
     return (
-        <table>
+        <table className="full-width">
             <tbody>
                 {props.vocabSets.map(SingleVocabSet)}
             </tbody>

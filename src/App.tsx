@@ -65,8 +65,8 @@ export default function App() {
 
   return (
     <div className="App">
-      <header className="Header">
-        <h1 >Passive Vocab Trainer</h1>
+      <header className="flex-row full-width">
+        <h1>Passive Vocab Trainer</h1>
         {currentView !== "dashboard" && <p className="clickable" onClick={resetStates}>X</p>}
       </header>
       {currentView === "dashboard" && <>
@@ -80,7 +80,6 @@ export default function App() {
       {currentView === "learning" && <>
         <LearnView
           vocabSet={maybeCurrentlyLearning}
-          setMaybeCurrentlyLearning={setMaybeCurrentlyLearning}
           timeOutBase={1}
         />
       </>}

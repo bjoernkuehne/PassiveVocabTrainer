@@ -1,3 +1,8 @@
+:root {
+  --primary-color: black;
+  --secondary-color: rgb(0, 206, 93);
+}
+
 .App {
   font-family: sans-serif;
   max-width: 40rem;
@@ -9,7 +14,7 @@
 }
 
 .clickable:hover {
-  color: green;
+  color: var(--secondary-color);
 }
 
 .Input {
@@ -24,17 +29,42 @@
 .EditVocabRow {
   display: flex;
   flex-direction: row;
+  align-items: center;
   column-gap: 1rem;
 }
 
-.buttonRow {
+.flex-row {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.Header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+.full-width {
+  width: 100%;
+}
+
+tr {
+  border-bottom: 1px solid grey;
+  padding: 0.5rem 0;
+  margin: 0.5rem 0;
+}
+
+button {
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 0.2rem;
+  /* padding: 0.5rem 1rem; */
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: white;
+  height: 2rem;
+}
+
+button:hover {
+  color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+label {
+  margin-bottom: 0.2rem;
 }

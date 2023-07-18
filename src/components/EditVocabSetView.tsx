@@ -52,9 +52,13 @@ const EditVocabSetView = (props: IProps) => {
                 onChange={setName}
             />
             {localVocabSet.vocabData.map((val, index) =>
-                <EditVocabRow key={buildComponentKey(val.id, "EditVocabRow")} vocab={val} handleVocabUpdate={handleVocabUpdate} handleRemove={index !== 0 ? handleRemove : undefined} />
+                <EditVocabRow
+                    key={buildComponentKey(val.id, "EditVocabRow")}
+                    vocab={val}
+                    handleVocabUpdate={handleVocabUpdate}
+                    handleRemove={handleRemove} />
             )}
-            <div className="buttonRow">
+            <div className="flex-row">
                 <button onClick={addRow}>Add row</button>
                 <button onClick={handleOnSave}>Save</button>
             </div>

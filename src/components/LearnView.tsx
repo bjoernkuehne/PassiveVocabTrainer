@@ -7,7 +7,6 @@ import VocabView from "./VocabView"
 
 interface IProps {
     vocabSet: IVocabSet | undefined
-    setMaybeCurrentlyLearning: Dispatch<SetStateAction<IVocabSet | undefined>>
     timeOutBase: number
 }
 
@@ -20,10 +19,6 @@ const LearnView = (props: IProps) => {
     const [calculatedTimeOut, setCalculatedTimeOut] =
         useState<number>(0)
     const [currentTimeOut, setCurrentTimeout] = useState<NodeJS.Timeout | undefined>(undefined)
-
-    const getCloseViewOnClick = () =>
-        () => props.setMaybeCurrentlyLearning(undefined)
-
 
     const getSetLearnedViewStatusOnClick = (learnViewStatus: TLearnViewStatus) =>
         () => {
@@ -82,9 +77,6 @@ const LearnView = (props: IProps) => {
                     calculatedTimeOut={calculatedTimeOut}
                 />
             }
-            <button onClick={getCloseViewOnClick()}>
-                Close
-            </button>
         </div>
     )
 }
