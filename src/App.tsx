@@ -49,6 +49,17 @@ export default function App() {
     setMaybeCurrentlyLearning(undefined)
   }
 
+  const deleteSet = (vocabSet: IVocabSet) => {
+    setLocalStorageState({
+      ...localStorageState, data: {
+        ...localStorageState.data,
+        vocabSets: localStorageState.data.vocabSets
+          .filter((val) => val.id !== vocabSet.id)
+      }
+    })
+    resetStates()
+  }
+
   useEffect(() => {
     saveInLocalStorage(localStorageState)
   }, [localStorageState])
@@ -73,13 +84,15 @@ export default function App() {
         <VocabSetList
           vocabSets={localStorageState.data.vocabSets}
           setMaybeCurrentlyLearning={setMaybeCurrentlyLearning}
-          setForEditing={setMaybeCurrentlyEditing}
+        // setForEditing={setMaybeCurrentlyEditing}
         />
         <button onClick={onClickHandlerNewSet}>Add new Set</button>
       </>}
       {currentView === "learning" && <>
         <LearnView
           vocabSet={maybeCurrentlyLearning}
+          setForEditing={setMaybeCurrentlyEditing}
+          deleteSet={deleteSet}
           timeOutBase={1}
         />
       </>}

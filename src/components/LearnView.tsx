@@ -7,6 +7,8 @@ import VocabView from "./VocabView"
 
 interface IProps {
     vocabSet: IVocabSet | undefined
+    setForEditing: (vocabSet: IVocabSet) => void
+    deleteSet: (vocabSet: IVocabSet) => void
     timeOutBase: number
 }
 
@@ -24,6 +26,16 @@ const LearnView = (props: IProps) => {
         () => {
             setLearnViewStatus(learnViewStatus)
             nextVocab()
+        }
+
+    const getSetForEditing = (vocabSet: IVocabSet) =>
+        () => props.setForEditing(vocabSet)
+
+    const getDeleteSetHandler = (vocabSet: IVocabSet) =>
+        () => {
+            if (confirm(`Do you really want to delete the set "${props.vocabSet?.name}"`)) {
+                props.deleteSet(vocabSet)
+            }
         }
 
     const nextVocab = () => {
@@ -64,13 +76,35 @@ const LearnView = (props: IProps) => {
 
     return (
         <div>
-            <h1>{props.vocabSet?.name}</h1>
-            {learnViewStatus === "loaded" &&
-                <button
-                    onClick={getSetLearnedViewStatusOnClick("playing")}
-                >
-                    Start learning
-                </button>}
+            {learnViewStatus !== "playing" &&
+                <h1>{props.vocabSet?.name}</h1>
+            }
+            {learnViewStatus === "loaded" && <>
+                <div className="flex-row">
+                    <button
+                        onClick={getSetLearnedViewStatusOnClick("playing")}
+                    >
+                        Start learning
+                    </button>
+                    {props.vocabSet &&
+                        <button
+                            onClick={getDeleteSetHandler(props.vocabSet)}
+                        >
+                            Delete Set
+                        </button>
+                    }
+                    {props.vocabSet &&
+                        <button
+                            onClick={getSetForEditing(props.vocabSet)}
+                        >
+                            Edit Set
+                        </button>
+                    }
+                </div>
+                <div>
+                    {props.vocabSet?.vocabData.map((val) => <p>{val.targetLanguage}</p>)}
+                </div>
+            </>}
             {currentVocab
                 && <VocabView
                     vocab={currentVocab}
