@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import IVocabSet from "../interfaces/VocabSet"
 import { TLearnViewStatus } from "../types/LearnViewStatus"
-import { calcTimeOut, getVocabIDsFromSet, randomizeNumberArray } from "../utils/utils"
+import { buildComponentKey, calcTimeOut, getVocabIDsFromSet, randomizeNumberArray } from "../utils/utils"
 import IVocab from "../interfaces/Vocab"
 import VocabView from "./VocabView"
 
@@ -104,7 +104,7 @@ const LearnView = (props: IProps) => {
                     </div>
                 </div>
                 <div>
-                    {props.vocabSet?.vocabData.map((val) => <p>{val.targetLanguage}</p>)}
+                    {props.vocabSet?.vocabData.map((val, index) => <p key={buildComponentKey(index, "LearnViewTargetLanguage")}>{val.targetLanguage}</p>)}
                 </div>
             </>}
             {currentVocab

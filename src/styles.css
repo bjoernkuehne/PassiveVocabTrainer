@@ -8,11 +8,6 @@ body {
   margin: 0 auto;
 }
 
-h1 {
-  margin: 0;
-  color: white;
-}
-
 .App {
   display: flex;
   flex-direction: column;
@@ -30,6 +25,11 @@ h1 {
   margin: 0;
   box-sizing: border-box;
   padding: 0.5rem;
+}
+
+.Header > h1 {
+  margin: 0;
+  color: white;
 }
 
 .Dashboard {

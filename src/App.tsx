@@ -20,6 +20,11 @@ export default function App() {
     setMaybeCurrentlyEditing(emptyVocabSet)
   }
 
+  const resetStates = () => {
+    setMaybeCurrentlyEditing(undefined)
+    setMaybeCurrentlyLearning(undefined)
+  }
+
   const handleSaveSet = (vocabSet: IVocabSet) => {
     const existingSet: boolean = doesVocabSetContainID(localStorageState, vocabSet.id)
 
@@ -41,11 +46,6 @@ export default function App() {
     }
 
     resetStates()
-  }
-
-  const resetStates = () => {
-    setMaybeCurrentlyEditing(undefined)
-    setMaybeCurrentlyLearning(undefined)
   }
 
   const deleteSet = (vocabSet: IVocabSet) => {
