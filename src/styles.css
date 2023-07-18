@@ -1,6 +1,7 @@
 .App {
   font-family: sans-serif;
-  text-align: center;
+  max-width: 40rem;
+  margin: 0 auto;
 }
 
 .clickable {
@@ -9,4 +10,19 @@
 
 .clickable:hover {
   color: green;
+}
+
+.Input {
+  display: flex;
+  flex-direction: column;
+  place-content: left;
+  box-sizing: border-box;
+  padding-bottom: 1rem;
+  width: 100%;
+}
+
+.EditVocabRow {
+  display: flex;
+  flex-direction: row;
+  column-gap: 1rem;
 }

@@ -9,7 +9,7 @@ interface IProps {
 
 const Input = (props: IProps): JSX.Element => {
     return (
-        <>
+        <div className="Input">
             <label htmlFor={props.componentName}>{props.labelName}</label>
             <input
                 name={props.componentName}
@@ -17,7 +17,7 @@ const Input = (props: IProps): JSX.Element => {
                 value={props.value}
                 onChange={props.onChange}
             />
-        </>
+        </div>
     )
 }
 

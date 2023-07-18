@@ -34,6 +34,11 @@ const countCharsInVocab = (vocab: IVocab): number =>
 export const calcTimeOut = (base: number, vocab: IVocab): number =>
     base * 10 * countCharsInVocab(vocab)
 
+
+export const getEmptyVocab = (id: number): IVocab => (
+    { id, targetLanguage: "", translation: "", timesSeen: 0 }
+)
+
 export const getEmptyVocabSet = (id: number): IVocabSet => (
     { id, name: "", vocabData: [] }
 )

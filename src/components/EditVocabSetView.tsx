@@ -1,6 +1,9 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import IVocabSet from "../interfaces/VocabSet";
 import Input from "./Input";
+import EditVocabRow from "./EditVocabRow";
+import { buildComponentKey, getEmptyVocab, getEmptyVocabSet } from "../utils/utils";
+import IVocab from "../interfaces/Vocab";
 
 interface IProps {
     vocabSet: IVocabSet
@@ -8,24 +11,38 @@ interface IProps {
 }
 
 const EditVocabSetView = (props: IProps) => {
-    const [tempVocabSet, setTempVocabSet] = useState<IVocabSet>(props.vocabSet)
+    const [localVocabSet, setLocalVocabSet] = useState<IVocabSet>(props.vocabSet)
 
     const setName = (event: ChangeEvent<HTMLInputElement>) => {
-        setTempVocabSet({ ...tempVocabSet, name: event.target.value })
+        setLocalVocabSet({ ...localVocabSet, name: event.target.value })
     }
 
     const handleOnSave = () => {
-        props.saveSet(tempVocabSet)
+        props.saveSet(localVocabSet)
     }
+
+    const handleVocabUpdate = (vocab: IVocab) => {
+        setLocalVocabSet({ ...localVocabSet, vocabData: localVocabSet.vocabData.map((val) => val.id === vocab.id ? vocab : val) })
+    }
+
+    useEffect(() => {
+        if (localVocabSet.vocabData.length === 0) {
+            const newVocabSet: IVocabSet = { ...props.vocabSet, vocabData: [getEmptyVocab(1)] }
+            setLocalVocabSet(newVocabSet)
+        }
+        }, [props.vocabSet.vocabData])
 
     return (
         <>
             <Input
                 labelName="set name"
                 componentName="setName"
-                value={tempVocabSet.name}
+                value={localVocabSet.name}
                 onChange={setName}
             />
+            {localVocabSet.vocabData.map((val) =>
+                <EditVocabRow key={buildComponentKey(val.id, "EditVocabRow")} vocab={val} handleVocabUpdate={handleVocabUpdate} />
+            )}
             <button onClick={handleOnSave}>Save</button>
         </>
     )
