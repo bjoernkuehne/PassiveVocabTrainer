@@ -5,7 +5,7 @@ import Input from "./Input";
 interface IProps {
     vocab: IVocab
     handleVocabUpdate: (vocab: IVocab) => void
-    handleRemove: (vocab: IVocab) => void
+    handleRemove?: (vocab: IVocab) => void
 }
 
 const EditVocabRow = (props: IProps): JSX.Element => {
@@ -33,7 +33,7 @@ const EditVocabRow = (props: IProps): JSX.Element => {
                 value={props.vocab.translation}
                 onChange={handlerTranslation}
             />
-            <button onClick={getRemoveHandler}>-</button>
+            <button disabled={!props.handleRemove} onClick={getRemoveHandler}>-</button>
         </div>
     )
 }
